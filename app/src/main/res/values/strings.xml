@@ -16,4 +16,15 @@
     <string name="url_to_image">URL to Image</string>
 
     <string name="news_content">Content</string>
+
+
+    <string-array name="news_categories">
+        <item>Technology</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Sports</item>
+        <item>Entertainment</item>
+        <item>Fashion</item>
+        <item>Politics</item>
+    </string-array>
 </resources>
