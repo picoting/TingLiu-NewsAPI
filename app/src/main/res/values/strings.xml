@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">NewsAPI</string>
+
+    <string name="news_source">News Source</string>
+
+    <string name="news_author">Author</string>
+
+    <string name="news_title">Title</string>
+
+    <string name="news_description">Description</string>
+
+    <string name="news_url">URL</string>
+
+    <string name="published">Published At</string>
+
+    <string name="url_to_image">URL to Image</string>
+
+    <string name="news_content">Content</string>
 </resources>
