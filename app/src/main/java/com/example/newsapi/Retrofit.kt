@@ -1,6 +1,6 @@
 package com.example.newsapi
 
-import com.example.newsapi.NewsAPIService
+import com.example.newsapi.NewsAPI
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -13,7 +13,7 @@ object Retrofit {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val newsApi: NewsAPIService by lazy {
-        retrofit.create(NewsAPIService::class.java)
+    val newsApi: NewsAPI by lazy {
+        retrofit.create(NewsAPI::class.java)
     }
 }
