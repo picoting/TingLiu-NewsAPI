@@ -14,8 +14,10 @@ import com.example.newsapi.databinding.FragmentNewsListBinding
 
 
 private const val TAG = "NewsListFragment"
+
 class NewsListFragment: Fragment() {
     private var _binding: FragmentNewsListBinding? = null
+    private lateinit var newsAdapter: NewsListAdapter
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
@@ -46,14 +48,12 @@ class NewsListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
-
-        setupSpinner()
-
         newsListViewModel.newsArticles.observe(viewLifecycleOwner) { newsArticles ->
             // Update the adapter's data when the newsArticles LiveData changes
             newsAdapter.updateList(newsArticles)
         }
+
+        setupSpinner()
     }
 
     fun setupRecyclerView() {
