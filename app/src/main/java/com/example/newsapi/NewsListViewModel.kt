@@ -39,20 +39,17 @@ class NewsListViewModel : ViewModel() {
 
     fun fetchNewsByCategory(category: String) {
         viewModelScope.launch {
-            newsApi.getTopNewsByCategory(category).enqueue(object : Callback<NewsResponse> {
-                override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                    if (response.isSuccessful) {
-                        _newsArticles.postValue(response.body()?.articles)
-                        _isError.value = false
-                    } else {
-                        _isError.value = true
-                    }
-                }
-
-                override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+            try {
+                val response = newsApi.getTopNewsByCategory(category).execute()
+                if (response.isSuccessful) {
+                    _newsArticles.postValue(response.body()?.articles)
+                    _isError.value = false
+                } else {
                     _isError.value = true
                 }
-            })
+            } catch (e: Exception) {
+                _isError.value = true
+            }
         }
     }
 }
