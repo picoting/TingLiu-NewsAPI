@@ -1,5 +1,6 @@
 package com.example.newsapi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,6 +39,7 @@ class NewsListViewModel : ViewModel() {
     }
 
     fun fetchNewsByCategory(category: String) {
+        Log.d("NewsListViewModel", "fetching from category $category")
         viewModelScope.launch {
             try {
                 val response = newsApi.getTopNewsByCategory(category).execute()

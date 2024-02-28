@@ -52,7 +52,12 @@ class NewsListFragment: Fragment() {
 
         newsListViewModel.newsArticles.observe(viewLifecycleOwner) { newsArticles ->
             // Update the adapter's data when the newsArticles LiveData changes
-            newsAdapter.updateList(newsArticles)
+            if (newsArticles != null) {
+                Log.d(TAG, "Observer received new news articles, updating adapter.")
+                newsAdapter.updateList(newsArticles)
+            } else {
+                Log.d(TAG, "Observer received null for new news articles.")
+            }
         }
 
         setupSpinner()
@@ -77,7 +82,7 @@ class NewsListFragment: Fragment() {
                 //  fetch news from category using viewmodel?
                 Log.d(
                     "News List Fragment",
-                    "Category: ${selectedCategory}"
+                    "Category changed to: $selectedCategory"
                 )
                 newsListViewModel.fetchNewsByCategory(selectedCategory)
             }

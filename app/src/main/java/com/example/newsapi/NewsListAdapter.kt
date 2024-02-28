@@ -12,6 +12,7 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
         binding.newsAuthor.text = news.author
         binding.newsTitle.text = news.title
         binding.newsDescription.text = news.description
+        binding.newsUrl.text = news.url
 
         binding.root.setOnClickListener {
             Toast.makeText(binding.root.context, "${news.title} clicked!", Toast.LENGTH_SHORT).show()
@@ -39,7 +40,7 @@ class NewsListAdapter(private var newsList: List<News>) : RecyclerView.Adapter<N
         notifyDataSetChanged()
         Log.d(
             "News Adapter",
-            "changed news"
+            "updated news list"
         )
     }
 }
