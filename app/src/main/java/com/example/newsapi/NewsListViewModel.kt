@@ -39,19 +39,25 @@ class NewsListViewModel : ViewModel() {
     }
 
     fun fetchNewsByCategory(category: String) {
-        Log.d("NewsListViewModel", "fetching from category $category")
+        Log.d("NewsListViewModel", "Fetching from category $category")
         viewModelScope.launch {
-            try {
-                val response = newsApi.getTopNewsByCategory(category).execute()
-                if (response.isSuccessful) {
-                    _newsArticles.postValue(response.body()?.articles)
-                    _isError.value = false
-                } else {
-                    _isError.value = true
+            newsApi.getTopNewsByCategory(category).enqueue(object : Callback<NewsResponse> {
+                override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
+                    if (response.isSuccessful) {
+                        Log.d("NewsListViewModel", "Fetching from category $category successful")
+                        _newsArticles.postValue(response.body()?.articles)
+                        _isError.postValue(false)
+                    } else {
+                        Log.d("NewsListViewModel", "Fetching from category $category unsuccessful: ${response.message()}")
+                        _isError.postValue(true)
+                    }
                 }
-            } catch (e: Exception) {
-                _isError.value = true
-            }
+
+                override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+                    Log.d("NewsListViewModel", "Exception while fetching from category $category: ${t.message}")
+                    _isError.postValue(true)
+                }
+            })
         }
     }
 }
