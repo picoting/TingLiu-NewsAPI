@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapi.Retrofit.newsApiService
+import com.example.newsapi.Retrofit.newsApi
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +20,7 @@ class NewsListViewModel : ViewModel() {
 
     init{
         viewModelScope.launch {
-            newsApiService.getTopNewsByCategory("general").enqueue(object : Callback<NewsResponse> {
+            newsApi.getTopNewsByCategory("general").enqueue(object : Callback<NewsResponse> {
                 override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                     if (response.isSuccessful) {
                         _newsArticles.postValue(response.body()?.articles)
@@ -39,7 +39,7 @@ class NewsListViewModel : ViewModel() {
 
     fun fetchNewsByCategory(category: String) {
         viewModelScope.launch {
-            newsApiService.getTopNewsByCategory(category).enqueue(object : Callback<NewsResponse> {
+            newsApi.getTopNewsByCategory(category).enqueue(object : Callback<NewsResponse> {
                 override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                     if (response.isSuccessful) {
                         _newsArticles.postValue(response.body()?.articles)
