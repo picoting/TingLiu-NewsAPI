@@ -40,13 +40,15 @@ class NewsListFragment: Fragment() {
         binding.recyclerViewNews.layoutManager = LinearLayoutManager(context)
 
         //i need to set up the adapter TT
-        setupRecyclerView()
+        //setupRecyclerView()
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
 
         newsListViewModel.newsArticles.observe(viewLifecycleOwner) { newsArticles ->
             // Update the adapter's data when the newsArticles LiveData changes
@@ -56,8 +58,8 @@ class NewsListFragment: Fragment() {
         setupSpinner()
     }
 
-    fun setupRecyclerView() {
-        val newsAdapter = NewsListAdapter(emptyList()) // Initialize your adapter with empty or initial data
+    private fun setupRecyclerView() {
+        newsAdapter = NewsListAdapter(emptyList()) // Initialize your adapter with empty or initial data
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
@@ -73,6 +75,10 @@ class NewsListFragment: Fragment() {
                 // get category from the spinner
                 val selectedCategory = parent?.getItemAtPosition(position).toString()
                 //  fetch news from category using viewmodel?
+                Log.d(
+                    "News List Fragment",
+                    "Category: ${selectedCategory}"
+                )
                 newsListViewModel.fetchNewsByCategory(selectedCategory)
             }
 

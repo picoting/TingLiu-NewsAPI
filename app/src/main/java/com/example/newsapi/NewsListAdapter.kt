@@ -9,6 +9,7 @@ import com.example.newsapi.databinding.ListItemNewsBinding
 
 class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(news: News) {
+        binding.newsAuthor.text = news.author
         binding.newsTitle.text = news.title
         binding.newsDescription.text = news.description
 

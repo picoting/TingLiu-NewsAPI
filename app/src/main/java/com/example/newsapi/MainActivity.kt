@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun fetchNewsArticles() {
         val call: Call<NewsResponse> =
-            newsApi.getTopNewsByCategory("general") // Using `api` directly
+            newsApi.getTopNewsByCategory("Technology") // Using `api` directly
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 if (response.isSuccessful) {

@@ -5,11 +5,6 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/news_source"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="News Source"/>
 
     <TextView
         android:id="@+id/news_author"
