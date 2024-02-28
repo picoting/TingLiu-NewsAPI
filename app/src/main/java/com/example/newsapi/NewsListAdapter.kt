@@ -1,5 +1,6 @@
 package com.example.newsapi
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -17,7 +18,7 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
     }
 }
 
-class NewsListAdapter(private val newsList: List<News>) : RecyclerView.Adapter<NewsHolder>() {
+class NewsListAdapter(private var newsList: List<News>) : RecyclerView.Adapter<NewsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,4 +32,13 @@ class NewsListAdapter(private val newsList: List<News>) : RecyclerView.Adapter<N
     }
 
     override fun getItemCount() = newsList.size
+
+    fun updateList(newNewsList: List<News>) {
+        newsList = newNewsList // update news
+        notifyDataSetChanged()
+        Log.d(
+            "News Adapter",
+            "changed news"
+        )
+    }
 }

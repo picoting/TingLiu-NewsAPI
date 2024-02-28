@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapi.databinding.FragmentNewsListBinding
 
@@ -37,8 +38,7 @@ class NewsListFragment: Fragment() {
         binding.recyclerViewNews.layoutManager = LinearLayoutManager(context)
 
         //i need to set up the adapter TT
-        val adapter = NewsListAdapter(emptyList())
-        binding.recyclerViewNews.adapter = adapter
+        setupRecyclerView()
 
         return binding.root
     }
@@ -46,43 +46,38 @@ class NewsListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize ViewModel
-        // viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
-
-        // Setup RecyclerView
         setupRecyclerView()
 
-        // Setup Spinner
         setupSpinner()
+
+        newsListViewModel.newsArticles.observe(viewLifecycleOwner) { newsArticles ->
+            // Update the adapter's data when the newsArticles LiveData changes
+            newsAdapter.updateList(newsArticles)
+        }
     }
 
-    private fun setupRecyclerView() {
-        val newsAdapter = NewsListAdapter(listOf()) // Initialize your adapter with empty or initial data
+    fun setupRecyclerView() {
+        val newsAdapter = NewsListAdapter(emptyList()) // Initialize your adapter with empty or initial data
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
         }
 
-        // Observing data from ViewModel and updating RecyclerView
-        // viewModel.newsArticles.observe(viewLifecycleOwner) { articles ->
-        //     newsAdapter.updateData(articles)
-        // }
     }
 
     private fun setupSpinner() {
         val categorySpinner = binding.spinnerNewsCategories
 
-        // Spinner item selection listener
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // Get selected category from the spinner
+                // get category from the spinner
                 val selectedCategory = parent?.getItemAtPosition(position).toString()
-                // Use ViewModel to fetch news based on the selected category
+                //  fetch news from category using viewmodel?
                 newsListViewModel.fetchNewsByCategory(selectedCategory)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
+                newsListViewModel.fetchNewsByCategory("General")
             }
         }
     }
