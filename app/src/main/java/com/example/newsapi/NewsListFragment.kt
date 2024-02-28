@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,14 +34,11 @@ class NewsListFragment: Fragment() {
     ): View? {
         _binding = FragmentNewsListBinding.inflate(inflater, container, false)
 
-        //idk where newsRecyclerView is from
-        //binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        val news = newsListViewModel.newsArticles
+        binding.recyclerViewNews.layoutManager = LinearLayoutManager(context)
 
         //i need to set up the adapter TT
-        //val adapter = NewsListAdapter(crimes)
-        //binding.newsRecyclerView.adapter = adapter
+        val adapter = NewsListAdapter(emptyList())
+        binding.recyclerViewNews.adapter = adapter
 
         return binding.root
     }
@@ -59,7 +57,7 @@ class NewsListFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter(listOf()) // Initialize your adapter with empty or initial data
+        val newsAdapter = NewsListAdapter(listOf()) // Initialize your adapter with empty or initial data
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
@@ -72,24 +70,19 @@ class NewsListFragment: Fragment() {
     }
 
     private fun setupSpinner() {
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.news_categories, // Ensure this array is defined in your strings.xml
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerNewsCategories.adapter = adapter
-        }
+        val categorySpinner = binding.spinnerNewsCategories
 
-        binding.spinnerNewsCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val category = parent.getItemAtPosition(position).toString()
-                // Fetch news based on the selected category
-                // viewModel.fetchNewsByCategory(category)
+        // Spinner item selection listener
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                // Get selected category from the spinner
+                val selectedCategory = parent?.getItemAtPosition(position).toString()
+                // Use ViewModel to fetch news based on the selected category
+                newsListViewModel.fetchNewsByCategory(selectedCategory)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Another interface callback
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
             }
         }
     }

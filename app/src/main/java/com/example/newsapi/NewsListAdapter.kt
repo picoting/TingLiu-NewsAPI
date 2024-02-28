@@ -17,38 +17,17 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
     }
 }
 
-class NewsListAdapter(private val newsList: List<News>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsListAdapter(private val newsList: List<News>) : RecyclerView.Adapter<NewsHolder>() {
 
-    companion object {
-        private const val REGULAR_NEWS = 1
-        private const val FEATURED_NEWS = 0
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        val news = newsList[position]
-        return if (news.isFeatured) FEATURED_NEWS else REGULAR_NEWS
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            FEATURED_NEWS -> {
-                val featuredBinding = FeaturedListItemNewsBinding.inflate(inflater, parent, false)
-                FeaturedNewsHolder(featuredBinding)
-            }
-            else -> {
-                val binding = ListItemNewsBinding.inflate(inflater, parent, false)
-                NewsHolder(binding)
-        }
+        val binding = ListItemNewsBinding.inflate(inflater, parent, false)
+        return NewsHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         val news = newsList[position]
-        when (holder) {
-            is NewsHolder -> holder.bind(news)
-            is FeaturedNewsHolder -> holder.bind(news)
-            else -> throw IllegalArgumentException("Invalid view holder type")
-        }
+        holder.bind(news)
     }
 
     override fun getItemCount() = newsList.size
