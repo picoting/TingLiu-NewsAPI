@@ -7,16 +7,11 @@
 
 
     <TextView
-        android:id="@+id/news_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Author"/>
-
-    <TextView
         android:id="@+id/news_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"/>
+        android:text="@string/news_title"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/news_description"
@@ -24,11 +19,13 @@
         android:layout_height="wrap_content"
         android:text="Desription"/>
 
+
     <TextView
-        android:id="@+id/news_url"
+        android:id="@+id/news_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="URL"/>
+        android:text="Author"
+        android:textStyle="italic"/>
 
 
     <Button

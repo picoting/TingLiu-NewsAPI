@@ -5,7 +5,7 @@
 
     <string name="news_author">Author</string>
 
-    <string name="news_title">Title</string>
+    <string name="news_title"><b>Title</b></string>
 
     <string name="news_description">Description</string>
 
