@@ -21,6 +21,7 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
 
 class NewsListAdapter(private var newsList: List<News>) : RecyclerView.Adapter<NewsHolder>() {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemNewsBinding.inflate(inflater, parent, false)
@@ -30,6 +31,7 @@ class NewsListAdapter(private var newsList: List<News>) : RecyclerView.Adapter<N
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         val news = newsList[position]
         holder.bind(news)
+
     }
 
     override fun getItemCount() = newsList.size
