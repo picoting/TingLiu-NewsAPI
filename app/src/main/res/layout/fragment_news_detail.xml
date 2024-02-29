@@ -39,6 +39,6 @@
         android:id="@+id/back_to_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Go Back" />
+        android:text="Go Back" />
 
 </LinearLayout>
