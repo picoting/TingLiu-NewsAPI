@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapi.databinding.FragmentNewsListBinding
 
@@ -64,12 +63,19 @@ class NewsListFragment: Fragment() {
     }
 
     private fun setupRecyclerView() {
+
         newsAdapter = NewsListAdapter(emptyList()) // Initialize your adapter with empty or initial data
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
         }
 
+        /*
+        val staticList = listOf(News("Test Title", "Test Description", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"))  // Example static data
+        newsAdapter = NewsListAdapter(staticList)
+        binding.recyclerViewNews.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewNews.adapter = newsAdapter
+        */
     }
 
     private fun setupSpinner() {

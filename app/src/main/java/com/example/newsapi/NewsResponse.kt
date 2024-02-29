@@ -5,7 +5,7 @@ data class NewsResponse(
     val status: String,
 )
 
-data class News (
+data class News(
     val source: Source,
     val author: String?,
     val title: String,
