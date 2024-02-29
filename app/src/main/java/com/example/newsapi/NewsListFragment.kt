@@ -45,6 +45,7 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
         //i need to set up the adapter TT
         //setupRecyclerView()
 
+
         return binding.root
     }
 
@@ -64,6 +65,7 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
         }
 
         setupSpinner()
+
 
     }
 
@@ -110,6 +112,7 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(news: News) {
+        /*
         val bundle = Bundle().apply {
             putString("title", news.title)
             putString("description", news.description)
@@ -126,6 +129,36 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
                 Log.d(TAG, "NavController found: $navController")
             } catch (e: Exception) {
                 Log.e(TAG, "Error finding NavController", e)
+            }
+        }
+
+         */
+        val bundle = Bundle().apply {
+            putString("title", news.title)
+            putString("description", news.description)
+            putString("content", news.content)
+            putString("urlToImage", news.urlToImage)
+        }
+        Log.d(TAG, "Attempting to navigate to NewsDetailFragment")
+
+        if (isAdded) { // Check if fragment is currently added to its activity
+            Log.d(TAG, "fragment added to activity")
+            try {
+                // Create an instance of the destination fragment
+                val newsDetailFragment = NewsDetailFragment().apply {
+                    arguments = bundle // Pass the bundle to the fragment
+                }
+
+                // Perform the fragment transaction using parentFragmentManager
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.nav_host_fragment, newsDetailFragment) // Use the correct container ID
+                    addToBackStack(null) // Add this transaction to the back stack (optional)
+                    commit() // Commit the transaction
+                }
+
+                Log.d(TAG, "Navigation to NewsDetailFragment initiated")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error navigating to NewsDetailFragment", e)
             }
         }
 

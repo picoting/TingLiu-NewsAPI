@@ -24,12 +24,19 @@ class NewsHolder(private val binding: ListItemNewsBinding, private val listener:
         binding.newsTitle.text = news.title
         binding.newsDescription.text = news.description
 
+
     }
 }
 
 class NewsListAdapter(private var newsList: List<News>, private val listener: NewsListFragment) : RecyclerView.Adapter<NewsHolder>() {
+    private lateinit var onItemClick: (News) -> Unit
+
     interface OnItemClickListener {
         fun onItemClick(news: News)
+    }
+
+    fun setOnItemClickListener(listener: (News) -> Unit) {
+        onItemClick = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {

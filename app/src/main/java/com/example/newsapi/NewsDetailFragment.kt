@@ -48,10 +48,7 @@ class NewsDetailFragment : Fragment() {
 
             // Back button click listener to go back to the previous fragment
             backToHome.setOnClickListener {
-
-                findNavController().navigate(
-                    R.id.action_newsDetailFragment_to_newsListFragment
-                )
+                parentFragmentManager.popBackStack()
             }
         }
     }
