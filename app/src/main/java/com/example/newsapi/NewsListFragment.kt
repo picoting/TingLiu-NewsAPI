@@ -77,12 +77,6 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
             adapter = newsAdapter
         }
 
-        /*
-        val staticList = listOf(News("Test Title", "Test Description", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"))  // Example static data
-        newsAdapter = NewsListAdapter(staticList)
-        binding.recyclerViewNews.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewNews.adapter = newsAdapter
-        */
     }
 
     private fun setupSpinner() {
@@ -112,27 +106,7 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(news: News) {
-        /*
-        val bundle = Bundle().apply {
-            putString("title", news.title)
-            putString("description", news.description)
-            putString("content", news.content)
-            putString("urlToImage", news.urlToImage)
-        }
-        // using navcontroller to  go to detail fragment??
-        Log.d(TAG, "Attempting to navigate to NewsDetailFragment")
 
-        if (isAdded) { // Check if fragment is currently added to its activity
-            Log.d(TAG, "fragment added to activity")
-            try {
-                val navController = findNavController()
-                Log.d(TAG, "NavController found: $navController")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error finding NavController", e)
-            }
-        }
-
-         */
         val bundle = Bundle().apply {
             putString("title", news.title)
             putString("description", news.description)

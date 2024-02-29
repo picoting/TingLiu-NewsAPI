@@ -19,29 +19,5 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        fetchNewsArticles()
-    }
-    private fun fetchNewsArticles() {
-        val call: Call<NewsResponse> =
-            newsApi.getTopNewsByCategory("Technology") // Using `api` directly
-        call.enqueue(object : Callback<NewsResponse> {
-            override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
-                if (response.isSuccessful) {
-                    val articles = response.body()?.articles
-                    articles?.forEach { article ->
-                        Log.d(
-                            "MainActivity",
-                            "Title: ${article.title}, Description: ${article.description}"
-                        )
-                    }
-                } else {
-                    Log.e("MainActivity", "Failed to fetch news articles: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                Log.e("MainActivity", "Exception occurred: ${t.message}")
-            }
-        })
     }
 }

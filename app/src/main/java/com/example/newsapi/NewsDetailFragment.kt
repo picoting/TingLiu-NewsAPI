@@ -38,13 +38,6 @@ class NewsDetailFragment : Fragment() {
             view.findViewById<TextView>(R.id.author_view).text = content
             view.findViewById<TextView>(R.id.content_view).text = author
 
-            /*
-            args.news.urlToImage?.let { imageUrl ->
-                Glide.with(this@NewsDetailFragment)
-                    .load(imageUrl)
-                    .into(newsImageView)
-            }
-            */
 
             // Back button click listener to go back to the previous fragment
             backToHome.setOnClickListener {
