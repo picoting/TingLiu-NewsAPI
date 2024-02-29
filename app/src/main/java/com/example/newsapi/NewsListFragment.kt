@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapi.databinding.FragmentNewsListBinding
@@ -18,6 +20,7 @@ private const val TAG = "NewsListFragment"
 class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
     private var _binding: FragmentNewsListBinding? = null
     private lateinit var newsAdapter: NewsListAdapter
+
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
@@ -61,6 +64,7 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
         }
 
         setupSpinner()
+
     }
 
     private fun setupRecyclerView() {
@@ -114,10 +118,16 @@ class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
         }
         // using navcontroller to  go to detail fragment??
         Log.d(TAG, "Attempting to navigate to NewsDetailFragment")
-        findNavController().navigate(
-            R.id.action_newsListFragment_to_newsDetailFragment,
-            bundle
-        )
+
+        if (isAdded) { // Check if fragment is currently added to its activity
+            Log.d(TAG, "fragment added to activity")
+            try {
+                val navController = findNavController()
+                Log.d(TAG, "NavController found: $navController")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error finding NavController", e)
+            }
+        }
 
     }
 
