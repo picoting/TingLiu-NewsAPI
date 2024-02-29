@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapi.databinding.FragmentNewsListBinding
 
 
 private const val TAG = "NewsListFragment"
 
-class NewsListFragment: Fragment() {
+class NewsListFragment: Fragment(), NewsListAdapter.OnItemClickListener {
     private var _binding: FragmentNewsListBinding? = null
     private lateinit var newsAdapter: NewsListAdapter
     private val binding
@@ -64,7 +65,7 @@ class NewsListFragment: Fragment() {
 
     private fun setupRecyclerView() {
 
-        newsAdapter = NewsListAdapter(emptyList()) // Initialize your adapter with empty or initial data
+        newsAdapter = NewsListAdapter(emptyList(), this) // initialize your adapter with empty or initial data
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
@@ -103,4 +104,22 @@ class NewsListFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onItemClick(news: News) {
+        val bundle = Bundle().apply {
+            putString("title", news.title)
+            putString("description", news.description)
+            putString("content", news.content)
+            putString("urlToImage", news.urlToImage)
+        }
+        // using navcontroller to  go to detail fragment??
+        Log.d(TAG, "Attempting to navigate to NewsDetailFragment")
+        findNavController().navigate(
+            R.id.action_newsListFragment_to_newsDetailFragment,
+            bundle
+        )
+
+    }
+
+
 }

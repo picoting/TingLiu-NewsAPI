@@ -3,12 +3,23 @@ package com.example.newsapi
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapi.databinding.ListItemNewsBinding
 
-class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
+class NewsHolder(private val binding: ListItemNewsBinding, private val listener: NewsListAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root)
+{
+    private var currentNews: News? = null
+    init {
+        binding.readMore.setOnClickListener {
+            Log.d("NewsListAdapter", "Read more clicked for news: ${currentNews?.title}")
+            currentNews?.let { news ->
+                listener.onItemClick(news)
+            }
+        }
+    }
+
     fun bind(news: News) {
+        currentNews = news
         binding.newsAuthor.text = news.author
         binding.newsTitle.text = news.title
         binding.newsDescription.text = news.description
@@ -16,19 +27,27 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
     }
 }
 
-class NewsListAdapter(private var newsList: List<News>) : RecyclerView.Adapter<NewsHolder>() {
-
+class NewsListAdapter(private var newsList: List<News>, private val listener: NewsListFragment) : RecyclerView.Adapter<NewsHolder>() {
+    interface OnItemClickListener {
+        fun onItemClick(news: News)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemNewsBinding.inflate(inflater, parent, false)
-        return NewsHolder(binding)
+        return NewsHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         val news = newsList[position]
         holder.bind(news)
 
+        /*
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(news)
+        }
+
+         */
     }
 
     override fun getItemCount() = newsList.size

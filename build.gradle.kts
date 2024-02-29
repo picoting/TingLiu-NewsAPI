@@ -11,5 +11,8 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4") // Use the latest version
+
+        val nav_version = "2.7.7"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
     }
 }
