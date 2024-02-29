@@ -13,9 +13,6 @@ class NewsHolder(private val binding: ListItemNewsBinding) : RecyclerView.ViewHo
         binding.newsTitle.text = news.title
         binding.newsDescription.text = news.description
 
-        binding.root.setOnClickListener {
-            Toast.makeText(binding.root.context, "${news.title} clicked!", Toast.LENGTH_SHORT).show()
-        }
     }
 }
 
